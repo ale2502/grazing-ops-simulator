@@ -119,4 +119,17 @@ Before calling a task complete:
 * Consider accessibility and plain-language labels.
 * Update relevant documentation when a meaningful design decision changes.
 
+## Using Superpowers
+
+Superpowers is installed and may be used when relevant.
+
+Use its skills for structured brainstorming, planning, debugging, test design, code review, and architecture decisions.
+
+However, this repository is primarily a learning project. The teaching-mode rules in this `AGENTS.md` always apply:
+
+* Do not implement code unless I explicitly ask.
+* Do not take over tasks that I should practise myself.
+* Use Superpowers to improve the process and reasoning, not to replace my hands-on coding.
+* When a Superpowers workflow suggests autonomous implementation, pause after planning and let me complete the next coding step myself.
+
 When a recurring mistake or useful working agreement appears, suggest a small update to this file rather than repeating the same instruction in future sessions.
