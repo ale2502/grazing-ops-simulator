@@ -10,7 +10,7 @@
 * name
 * area
 * shape
-* status
+* status: in_use | available | regrowing
 
 ## Herd
 * id
@@ -22,7 +22,7 @@
 * id
 * herd_id
 * battery
-* connection_status
+* connection_status: online | offline
 * location
 * last_location_at
 
@@ -35,7 +35,13 @@ description: a smaller planned section inside that paddock, usually for a specif
 * starts_at
 * ends_at
 * shape
-* status
+* status: draft | scheduled | active | completed | cancelled
+
+  - draft = being planned, not confirmed
+  - scheduled = confirmed for a future time
+  - active = happening now
+  - completed = finished
+  - cancelled = abandoned before or during use
 
 ## HerdMoveCommand
 description: A herd move command is the instruction that tells the system to move a herd into a planned grazing break
