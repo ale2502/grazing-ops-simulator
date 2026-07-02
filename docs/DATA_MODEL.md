@@ -28,7 +28,7 @@
 * last_location_at
 
 ## GrazingBreak
-description: A grazing break is the specific piece of grass the herd is allowed to graze next
+description: A grazing break is a smaller planned section inside that paddock, usually for a specific time window
 
 * id
 * paddock_id
