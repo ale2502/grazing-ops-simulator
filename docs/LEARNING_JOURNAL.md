@@ -19,3 +19,12 @@ This file records durable learning progress for GrazingOps Simulator. It should 
 - Corrections: Relationship fields such as `farm_id`, `herd_id`, `paddock_id`, and `grazing_break_id` are what turn separate table ideas into a connected model. `last_location_at` is clearer than `last_location` when the field stores a timestamp. Generic `status` fields should eventually list their allowed values.
 - Open questions: The model still needs command acknowledgement records, collar event records, and clearer status values for paddocks, grazing breaks, and collars.
 - Next practice task: Add a `CommandAcknowledgement` section that explains how each collar responds to a herd move command.
+
+## 2026-07-03 - Command Acknowledgements and Status Lifecycles
+
+- Focus: Clarify the data model around per-collar command responses and lifecycle status values.
+- Decisions: `docs/DATA_MODEL.md` now includes `CommandAcknowledgment` to track how one collar responds to one herd move command. Paddock status values are `available`, `in_use`, and `regrowing`; collar connection status is `online` or `offline`; grazing break status values are `draft`, `scheduled`, `active`, `completed`, and `cancelled`.
+- What I learned: `HerdMoveCommand.status` is the overall summary for the herd move, while `CommandAcknowledgment.status` stores the per-collar detail that lets the app explain partial success. A grazing break can be a `draft` when the manager is still planning the shape and timing but has not confirmed it.
+- Corrections: `delayed` was removed from command acknowledgement status because delay can be inferred while an acknowledgement is still `pending`. Paddock status describes the land right now, while grazing break status describes the plan over time.
+- Open questions: The model still needs collar event records and possibly clearer definitions for command status transitions.
+- Next practice task: Add a `CollarEvent` section that describes simulated collar messages such as location updates, battery updates, connection changes, and command acknowledgement events.
