@@ -17,7 +17,6 @@
 * farm_id
 * current_paddock_id
 * name
-* 
 
 ## Collar
 * id
@@ -28,7 +27,7 @@
 * last_location_at
 
 ## GrazingBreak
-description: A grazing break is a smaller planned section inside that paddock, usually for a specific time window
+description: a smaller planned section inside that paddock, usually for a specific time window
 
 * id
 * paddock_id
@@ -39,7 +38,7 @@ description: A grazing break is a smaller planned section inside that paddock, u
 * status
 
 ## HerdMoveCommand
-description: A herd move command is the instruction that tells the system to move a herd into a planned grazing
+description: A herd move command is the instruction that tells the system to move a herd into a planned grazing break
 
 * id
 * herd_id
@@ -47,3 +46,14 @@ description: A herd move command is the instruction that tells the system to mov
 * scheduled_for
 * status: draft | scheduled | dispatched | partially_acknowledged | acknowledged | failed | active
 * created_at
+
+## CommandAcknowledgment
+description: tracks how one collar responded to one herd move command
+relationship: one herd move command has many command acknowledgments, one for each collar in the herd
+
+* id
+* herd_move_command_id
+* collar_id
+* status: pending | acknowledged | failed | missed
+* acknowledged_at
+* last_attempted_at
