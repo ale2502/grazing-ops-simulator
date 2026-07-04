@@ -66,12 +66,12 @@ relationship: one herd move command has many command acknowledgments, one for ea
 
 ## CollarEvent
 description: records one simulated message received from a collar
+payload: extra details for this event, such as battery percentage, location, or failure reason
 
 * id
 * collar_id
-* herd_move_command_id
-* type: location_updated | battery_updated | connection_changed | command_acknowledged |
-command_failed
+* herd_move_command_id | optional
+* type: location_updated | battery_updated | connection_changed | command_acknowledged | command_failed
 * occurred_at
 * received_at
 * payload
