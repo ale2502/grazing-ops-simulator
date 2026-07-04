@@ -63,3 +63,15 @@ relationship: one herd move command has many command acknowledgments, one for ea
 * status: pending | acknowledged | failed | missed
 * acknowledged_at
 * last_attempted_at
+
+## CollarEvent
+description: records one simulated message received from a collar
+
+* id
+* collar_id
+* herd_move_command_id
+* type: location_updated | battery_updated | connection_changed | command_acknowledged |
+command_failed
+* occurred_at
+* received_at
+* payload
