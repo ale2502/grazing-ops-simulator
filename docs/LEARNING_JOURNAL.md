@@ -37,3 +37,12 @@ This file records durable learning progress for GrazingOps Simulator. It should 
 - Corrections: `active` should mean the scheduled move time has arrived and the move is happening, not necessarily that every collar received the command. `failed` on `HerdMoveCommand` describes the whole command, while `failed` on `CommandAcknowledgment` describes one collar response. `missed` means no collar response arrived before the response deadline.
 - Open questions: The next design step is to decide which command status transitions are allowed and what rule moves a command from one status to another.
 - Next practice task: Draw or write the allowed `HerdMoveCommand.status` transitions in plain English, including what happens when all, some, or no collars acknowledge before the response deadline.
+
+## 2026-07-07 - Herd Move Command Lifecycle
+
+- Focus: Turn the herd move command statuses into a clearer lifecycle that can later guide backend validation.
+- Decisions: `response_deadline_at` belongs on `HerdMoveCommand` because the whole command has one response window; any related `CommandAcknowledgment` still `pending` after that time becomes `missed`. Phase 1 can dispatch a command immediately after it is scheduled, keeping the simulator simple while still showing acknowledgement and partial-failure behaviour.
+- What I learned: A list of status values is not enough; the model also needs allowed transitions so the app knows which state changes are valid. Separating overall command state from per-collar acknowledgement state makes partial success easier to explain.
+- Corrections: The arrow-chain lifecycle was replaced with separate transition bullets so it does not imply that `failed` can move to `active`. The response deadline was moved away from individual acknowledgements because the deadline is shared by all collar responses for one command.
+- Open questions: Later phases may choose to dispatch shortly before `scheduled_for` instead of immediately after scheduling.
+- Next practice task: Sketch the first Phase 1 API endpoints in plain English: get farm overview, create grazing break, schedule herd move command, and get command status summary.
