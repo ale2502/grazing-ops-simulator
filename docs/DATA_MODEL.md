@@ -59,7 +59,7 @@ description: A herd move command is the instruction that tells the system to mov
   - partially_acknowledged = some collars responded to the dispatch
   - acknowledged = all collars responded to the dispatch
   - failed = the move command could not be completed successfully
-  - active = collars received the dispatch and the move is now happening 
+  - active = the scheduled move time has arrived and the move is now happening 
 
 ## CommandAcknowledgment
 description: tracks how one collar responded to one herd move command
@@ -71,6 +71,11 @@ relationship: one herd move command has many command acknowledgments, one for ea
 * status: pending | acknowledged | failed | missed
 * acknowledged_at
 * last_attempted_at
+
+  - pending: collar hasn't responded yet
+  - acknowledged: collar received and accepted the command
+  - failed: collar failed to receive the command (system knows sending failed)
+  - missed: collar did not respond before the response deadline
 
 ## CollarEvent
 description: records one simulated message received from a collar
