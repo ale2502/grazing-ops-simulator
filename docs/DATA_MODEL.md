@@ -46,22 +46,29 @@ description: a smaller planned section inside that paddock, usually for a specif
 ## HerdMoveCommand
 description: A herd move command is the instruction that tells the system to move a herd into a planned grazing break
 
-status transitions order: draft -> scheduled -> dispatched -> acknowledged | partially_acknowledged | failed -> active
-
 * id
 * herd_id
 * grazing_break_id
+* response_deadline_at: after this time, any related CommandAcknowledgment still pending becomes missed
 * scheduled_for
 * status: draft | scheduled | dispatched | partially_acknowledged | acknowledged | failed | active
 * created_at
 
   - draft = being planned, not confirmed
   - scheduled = confirmed for a future time
-  - dispatched = command sent to collars
+  - dispatched = command sent to collars shortly before the scheduled move time
   - partially_acknowledged = some collars responded to the dispatch
   - acknowledged = all collars responded to the dispatch
   - failed = the move command could not be completed successfully
   - active = the scheduled move time has arrived and the move is now happening 
+
+Allowed status transitions:
+  - draft -> scheduled
+  - scheduled -> dispatched
+  - dispatched -> acknowledged if all collars acknowledge before the deadline
+  - dispatched -> partially_acknowledged if some, but not all, collars acknowledge
+  - dispatched -> failed if the command cannot be sent or no useful response arrives
+  - acknowledged or partially_acknowledged -> active when the scheduled move time arrives
 
 ## CommandAcknowledgment
 description: tracks how one collar responded to one herd move command
@@ -70,7 +77,6 @@ relationship: one herd move command has many command acknowledgments, one for ea
 * id
 * herd_move_command_id
 * collar_id
-* response_deadline_at: if status is pending for longer than 1 minute, status become "missed"
 * status: pending | acknowledged | failed | missed
 * acknowledged_at
 * last_attempted_at
