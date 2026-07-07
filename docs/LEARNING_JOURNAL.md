@@ -46,3 +46,12 @@ This file records durable learning progress for GrazingOps Simulator. It should 
 - Corrections: The arrow-chain lifecycle was replaced with separate transition bullets so it does not imply that `failed` can move to `active`. The response deadline was moved away from individual acknowledgements because the deadline is shared by all collar responses for one command.
 - Open questions: Later phases may choose to dispatch shortly before `scheduled_for` instead of immediately after scheduling.
 - Next practice task: Sketch the first Phase 1 API endpoints in plain English: get farm overview, create grazing break, schedule herd move command, and get command status summary.
+
+## 2026-07-07 - First Backend TDD Slice
+
+- Focus: Start the backend implementation with one small tested business function instead of jumping straight into Express routes or database queries.
+- Decisions: The first slice is `scheduleHerdMove`, placed under `apps/api/src/herd-move`. The first test checks only the smallest useful behaviour: scheduling a herd move returns a command with `status` set to `dispatched`. Vitest is the test runner and `npm test` now runs `vitest run`.
+- What I learned: TDD turns a vague requirement into a concrete promise before implementation. The Arrange/Act/Assert structure helps separate setup, the function call, and the expected result. Repository/query functions should be introduced only when the use-case test proves they are needed.
+- Corrections: `node_modules` was accidentally committed because `.gitignore` does not remove files already staged or tracked. `git rm -r --cached node_modules` removes the folder from Git tracking while keeping it locally, and `.gitignore` now prevents it from being added again.
+- Open questions: The next version of `scheduleHerdMove` still needs fake repository functions so the test can prove one pending acknowledgement is created for each collar in the herd.
+- Next practice task: Expand the `scheduleHerdMove` test with fake repositories that return collars and record created command acknowledgements.
