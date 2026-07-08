@@ -16,4 +16,9 @@ describe('scheduleHerdMove', () => {
     // Assert
     expect(result.status).toBe('dispatched');
   });
+
+  it('creates a pending acknowledgement for each collar in the herd', async () => {
+    // Arrange
+    const collars = [{ id: 'collar-1' }, { id: 'collar-2' }];
+  });
 });
