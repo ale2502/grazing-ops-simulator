@@ -55,3 +55,12 @@ This file records durable learning progress for GrazingOps Simulator. It should 
 - Corrections: `node_modules` was accidentally committed because `.gitignore` does not remove files already staged or tracked. `git rm -r --cached node_modules` removes the folder from Git tracking while keeping it locally, and `.gitignore` now prevents it from being added again.
 - Open questions: The next version of `scheduleHerdMove` still needs fake repository functions so the test can prove one pending acknowledgement is created for each collar in the herd.
 - Next practice task: Expand the `scheduleHerdMove` test with fake repositories that return collars and record created command acknowledgements.
+
+## 2026-07-08 - Fake Repositories in Unit Tests
+
+- Focus: Understand why the next `scheduleHerdMove` test needs fake repository functions inside the test.
+- Decisions: Keep the first `scheduleHerdMove` test because it proves the separate behaviour that a scheduled herd move returns a `dispatched` command. Add a second test for the new behaviour rather than replacing the first one.
+- What I learned: `scheduleHerdMove` is the real function being tested, while functions created inside the test can be fake dependencies. A fake `collarRepository.findByHerdId` controls which collars the test gives to the business function, and a fake `acknowledgmentRepository.createMany` records what the function tried to save without needing a real database.
+- Corrections: The word is `collar`, not `colour`, in this project. The fake repository functions are not replacing production code; they are test doubles that let the unit test control the outside world.
+- Open questions: The next test still needs clear TypeScript types for the fake repositories and the acknowledgement records.
+- Next practice task: Fill in the Arrange section of the second `scheduleHerdMove` test with fake collars, an empty `createdAcknowledgements` array, and fake repository objects before writing the Act or Assert sections.
