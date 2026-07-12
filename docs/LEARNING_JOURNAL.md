@@ -64,3 +64,12 @@ This file records durable learning progress for GrazingOps Simulator. It should 
 - Corrections: The word is `collar`, not `colour`, in this project. The fake repository functions are not replacing production code; they are test doubles that let the unit test control the outside world.
 - Open questions: The next test still needs clear TypeScript types for the fake repositories and the acknowledgement records.
 - Next practice task: Fill in the Arrange section of the second `scheduleHerdMove` test with fake collars, an empty `createdAcknowledgements` array, and fake repository objects before writing the Act or Assert sections.
+
+## 2026-07-12 - Agentic Implementation Working Agreement
+
+- Focus: Update the project working agreement so the coding agent can implement requested work end to end while continuing to teach the developer.
+- Decisions: `AGENTS.md` now treats requests to build, change, fix, refactor, configure, test, or document repository work as permission to complete the necessary in-scope steps. The agent should explain its approach, important implementation details, trade-offs, changed files, and verification results. Coaching-only work remains available when explicitly requested.
+- What I learned: Agentic coding and learning are compatible when the agent makes its reasoning and verification visible instead of silently producing code. A standing working agreement also avoids repeatedly granting permission for ordinary edits and development commands.
+- Corrections: The previous default stopped at hints or planning unless implementation permission was repeated. The new default carries clear implementation requests through coding and testing, while retaining approval boundaries for destructive work, deployment, paid or credentialed services, unclear major product decisions, and commits.
+- Open questions: The working agreement can be refined later if a recurring agent behaviour provides too much or too little explanation.
+- Next practice task: Choose the next small Phase 1 feature and describe the learning detail you most want explained during its implementation.
