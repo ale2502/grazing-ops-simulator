@@ -73,3 +73,12 @@ This file records durable learning progress for GrazingOps Simulator. It should 
 - Corrections: The previous default stopped at hints or planning unless implementation permission was repeated. The new default carries clear implementation requests through coding and testing, while retaining approval boundaries for destructive work, deployment, paid or credentialed services, unclear major product decisions, and commits.
 - Open questions: The working agreement can be refined later if a recurring agent behaviour provides too much or too little explanation.
 - Next practice task: Choose the next small Phase 1 feature and describe the learning detail you most want explained during its implementation.
+
+## 2026-07-13 - Agent-Guided Testing Workflow
+
+- Focus: Restore a hands-on learning workflow and understand the completed `scheduleHerdMove` unit tests.
+- Decisions: `AGENTS.md` now makes agent-guided learning the default. The agent should explain the goal and reasoning, provide small code snippets, and let the developer edit implementation files unless permission is given for a specific task. The `scheduleHerdMove` tests remain split into two behaviours: returning a dispatched command and creating one pending acknowledgement per collar.
+- What I learned: Arrange, Act, and Assert separate test setup, execution, and verification. Fake repositories replace database operations during a unit test with controlled in-memory functions. Dependency injection means `scheduleHerdMove` receives its ID generator and repository operations instead of creating them internally, making the business logic easier to test. `createdAcknowledgments` records what the fake repository was asked to save, and `toEqual` verifies the contents of the resulting array.
+- Corrections: Agentic coding does not require handing over implementation. It can mean learning to direct the agent, evaluate focused suggestions, type the changes personally, run checks, and ask follow-up questions until the code is understood. The tests currently prove command status and per-collar acknowledgement creation, but they do not yet prove that the complete herd-move command is persisted.
+- Open questions: The next slice needs to decide the smallest command-repository contract and which command fields should be verified when saving a scheduled move.
+- Next practice task: Write the Arrange section for a new test that uses a fake command repository to record the herd-move command passed to it.
