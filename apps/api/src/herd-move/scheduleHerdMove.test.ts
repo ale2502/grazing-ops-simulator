@@ -11,6 +11,9 @@ function createDependencies(collars: { id: string }[] = []) {
     createdAcknowledgments,
     dependencies: {
       createId: () => 'command-1',
+      commandRepository: {
+        create: async () => {},
+      },
       collarRepository: {
         findByHerdId: async () => collars,
       },
@@ -48,7 +51,8 @@ describe('scheduleHerdMove', () => {
       grazingBreakId: 'break-1',
       scheduledFor: new Date('2026-07-08T06:00:00.000Z'),
     };
-    const { createdAcknowledgments, dependencies } = createDependencies(collars);
+    const { createdAcknowledgments, dependencies } =
+      createDependencies(collars);
 
     // Act
     const result = await scheduleHerdMove(input, dependencies);
@@ -64,6 +68,48 @@ describe('scheduleHerdMove', () => {
         herdMoveCommandId: result.id,
         collarId: 'collar-2',
         status: 'pending',
+      },
+    ]);
+  });
+
+  it('saves the herd move command', async () => {
+    // Arrange
+    const input = {
+      herdId: 'herd-1',
+      grazingBreakId: 'break-1',
+      scheduledFor: new Date('2026-07-08T06:00:00.000Z'),
+    };
+
+    const createdCommands: Array<{
+      id: string;
+      herdId: string;
+      grazingBreakId: string;
+      scheduledFor: Date;
+      status: 'dispatched';
+    }> = [];
+
+    const { dependencies } = createDependencies();
+
+    const dependenciesWithCommandRepository = {
+      ...dependencies,
+      commandRepository: {
+        create: async (command: (typeof createdCommands)[number]) => {
+          createdCommands.push(command);
+        },
+      },
+    };
+
+    // Act
+    await scheduleHerdMove(input, dependenciesWithCommandRepository);
+
+    // Assert
+    expect(createdCommands).toEqual([
+      {
+        id: 'command-1',
+        herdId: 'herd-1',
+        grazingBreakId: 'break-1',
+        scheduledFor: new Date('2026-07-08T06:00:00.000Z'),
+        status: 'dispatched',
       },
     ]);
   });
